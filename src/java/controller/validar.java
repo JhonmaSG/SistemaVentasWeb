@@ -53,6 +53,7 @@ public class validar extends HttpServlet {
             String password = request.getParameter("txtpass");
             em = edao.validar(user, password);
             if( em.getUser() != null ){
+                request.setAttribute("usuario", em);
                 request.getRequestDispatcher("controlador?accion=Principal")
                         .forward(request, response);
             }else{

@@ -26,6 +26,22 @@ public class controlador extends HttpServlet {
                 request.getRequestDispatcher("Principal.jsp")
                         .forward(request, response);
                 break;
+            case "Producto":
+                request.getRequestDispatcher("Producto.jsp")
+                        .forward(request, response);
+                break;
+            case "Empleado":
+                request.getRequestDispatcher("Empleado.jsp")
+                        .forward(request, response);
+                break;
+            case "Cliente":
+                request.getRequestDispatcher("Cliente.jsp")
+                        .forward(request, response);
+                break;
+            case "NuevaVenta":
+                request.getRequestDispatcher("RegistrarVenta.jsp")
+                        .forward(request, response);
+                break;
             default:
                 throw new AssertionError();
         }
