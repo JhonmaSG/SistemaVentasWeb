@@ -13,6 +13,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import model.Empleado;
 import model.EmpleadoDAO;
 
+//Mirar JDK 16.0
+//Jhon Serrano
 /**
  *
  * @author Jhon
