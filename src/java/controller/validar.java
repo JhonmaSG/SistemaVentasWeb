@@ -21,51 +21,43 @@ import model.EmpleadoDAO;
  */
 public class validar extends HttpServlet {
 
-
     EmpleadoDAO edao = new EmpleadoDAO();
     Empleado em = new Empleado();
-    
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet validar</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet validar at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
-    }
 
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        //processRequest(request, response);
-        
         String accion = request.getParameter("accion");
-        
-        if( accion.equalsIgnoreCase("Ingresar") ){
+
+        if (accion.equalsIgnoreCase("Ingresar")) {
             //Capturar los datos que esta ingresando el usuario
             String user = request.getParameter("txtuser");
-            String password = request.getParameter("txtpass");
-            em = edao.validar(user, password);
-            if( em.getUser() != null ){
+            String pass = request.getParameter("txtpass");
+            em = edao.validar(user, pass);
+            if (em.getUser() != null) {
                 request.setAttribute("usuario", em);
-                request.getRequestDispatcher("controlador?accion=Principal")
+                request.getRequestDispatcher("controlador?menu=Principal")
                         .forward(request, response);
-            }else{
+            } else {
                 request.getRequestDispatcher("index.jsp")
                         .forward(request, response);
             }
-        } else{
+        } else {
             request.getRequestDispatcher("index.jsp")
-                        .forward(request, response);
+                    .forward(request, response);
         }
+    }
+    
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        processRequest(request, response);
+    }
+    
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        processRequest(request, response);
     }
 
     @Override

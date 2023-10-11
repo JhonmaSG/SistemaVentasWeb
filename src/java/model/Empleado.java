@@ -13,7 +13,7 @@ public class Empleado {
     String dni;
     String nom;
     String tel;
-    String state;
+    String estado;
     String user;
 
     public Empleado() {
@@ -24,7 +24,7 @@ public class Empleado {
         this.dni = dni;
         this.nom = nom;
         this.tel = tel;
-        this.state = state;
+        this.estado = state;
         this.user = user;
     }
 
@@ -60,12 +60,12 @@ public class Empleado {
         this.tel = tel;
     }
 
-    public String getState() {
-        return state;
+    public String getEstado() {
+        return estado;
     }
 
-    public void setState(String state) {
-        this.state = state;
+    public void setEstado(String state) {
+        this.estado = state;
     }
 
     public String getUser() {
