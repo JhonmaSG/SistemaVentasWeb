@@ -15,56 +15,51 @@ import java.util.List;
  *
  * @author Jhon
  */
-public class EmpleadoDAO {
-
+public class ClienteDAO {
+    
     conexion cn = new conexion();
     Connection con;
     PreparedStatement ps;
     ResultSet rs;
     int r;
 
-    public Empleado validar(String user, String dni) {
-        //Instanciar la clase Empleado
-        Empleado em = new Empleado();
-        String sql = "select * from empleado where User=? and Dni=?";
+    public Cliente buscar(String dni) {
+        Cliente c = new Cliente();
+        String sql = "select * from cliente where Dni="+dni;
         try {
             con = cn.Conexion();
             ps = con.prepareStatement(sql);
-            //Asignar los valores que vienen como aprametro dentro de nuestra
-            //consulta sql
-            ps.setString(1, user);
-            ps.setString(2, dni);
             rs = ps.executeQuery();
             while (rs.next()) {
-                //em = Entidad Empleado
-                em.setId(rs.getInt("IdEmpleado"));
-                em.setUser(rs.getString("User"));
-                em.setDni(rs.getString("Dni"));
-                em.setNom(rs.getString("Nombres"));
+                //c = Entidad Cliente
+                c.setId(rs.getInt(1));
+                c.setDni(rs.getString(2));
+                c.setNom(rs.getString(3));
+                c.setDir(rs.getString(4));
+                c.setEs(rs.getString(5));
             }
         } catch (Exception e) {
         }
-        return em;
+        return c;
     }
 
     //Operaciones CRUD
     public List listar() {
-        String sql = "select * from empleado";
-        List<Empleado> lista = new ArrayList<>();
+        String sql = "select * from cliente";
+        List<Cliente> lista = new ArrayList<>();
         try {
             con = cn.Conexion();
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();
             while (rs.next()) {
-                Empleado em = new Empleado();
-                em.setId(rs.getInt(1));
-                em.setDni(rs.getString(2));
-                em.setNom(rs.getString(3));
-                em.setTel(rs.getString(4));
-                em.setEstado(rs.getString(5));
-                em.setUser(rs.getString(6));
+                Cliente cl = new Cliente();
+                cl.setId(rs.getInt(1));
+                cl.setDni(rs.getString(2));
+                cl.setNom(rs.getString(3));
+                cl.setDir(rs.getString(4));
+                cl.setEs(rs.getString(5));
 
-                lista.add(em);
+                lista.add(cl);
             }
         } catch (Exception e) {
             System.out.println("Fallo Listar");
@@ -73,7 +68,7 @@ public class EmpleadoDAO {
     }
 
     public int agregar(Empleado em) {
-        String sql = "insert into empleado(Dni, Nombres, Telefono, Estado, User)values(?,?,?,?,?)";
+        String sql = "insert into cliente(Dni, Nombres, Telefono, Estado, User)values(?,?,?,?,?)";
         try {
             con = cn.Conexion();
             ps = con.prepareStatement(sql);
@@ -91,7 +86,7 @@ public class EmpleadoDAO {
 
     public Empleado listarId(int id) {
         Empleado emp = new Empleado();
-        String sql = "select * from empleado where IdEmpleado="+id;
+        String sql = "select * from cliente where IdEmpleado="+id;
         try{
             con = cn.Conexion();
             ps = con.prepareStatement(sql);
@@ -109,7 +104,7 @@ public class EmpleadoDAO {
     }
 
     public int actualizar(Empleado em) {
-        String sql = "update empleado set Dni=?, Nombres=?, Telefono=?, Estado=?, User=? where IdEmpleado=?";
+        String sql = "update cliente set Dni=?, Nombres=?, Telefono=?, Estado=?, User=? where IdEmpleado=?";
         try {
             con = cn.Conexion();
             ps = con.prepareStatement(sql);

@@ -18,14 +18,14 @@
         <div class="d-flex">
             <div class="card">
                 <div class="card-body">
-                    <form acciton="controlador?menu=Empleado" method="POST">
+                    <form action="controlador?menu=Empleado" method="POST">
                         <div class="form-group">
                             <label>Dni</label>
                             <input type="text" value="${empleado.getDni()}" name="txtDni" class="form-control">
                         </div>
                         <div class="form-group">
                             <label>Nombres</label>
-                            <input type="text" value="${empleado.getNom()}" name="txtNombres" class="form-control">
+                            <input type="text" value="${empleado.getNom()}" name="txtNom" class="form-control">
                         </div>
                         <div class="form-group">
                             <label>Telefono</label>
@@ -50,6 +50,7 @@
                 <table class="table table-hover">
                     <thead>
                         <tr>
+                            <th>ID</th>
                             <th>DNI</th>
                             <th>NOMBRES</th>
                             <th>TELEFONO</th>
@@ -69,7 +70,7 @@
                                 <td>${em.getUser()}</td>
                                 <td>
                                     <a class="btn btn-warning" href="controlador?menu=Empleado&accion=Editar&id=${em.getId()}">Editar</a>
-                                    <a class="btn btn-darger " href=controlador?menu=Empleado&accion=Delete&id=${em.getId()}">Delete</a>
+                                    <a class="btn btn-danger" href="controlador?menu=Empleado&accion=Delete&id=${em.getId()}">Delete</a>
                                 </td>
                             </tr>
                         </c:forEach>

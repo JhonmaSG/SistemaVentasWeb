@@ -22,20 +22,21 @@
                         <a style="margin-left: 10px; border: none" class="nav-link" href="#">Home </a>
                     </li>
                     <li class="nav-item">
-                        <a style="margin-left: 10px; border: none" class="btn btn-outline-light" href="controlador?menu=Producto" target="myFrame">Producto</a>
+                        <a style="margin-left: 10px; border: none" class="btn btn-outline-light" href="controlador?menu=Producto&accion=Listar" target="myFrame">Producto</a>
                     </li>
                     <li class="nav-item">
                         <a style="margin-left: 10px; border: none" class="btn btn-outline-light" href="controlador?menu=Empleado&accion=Listar" target="myFrame">Empleado</a>
                     </li>
                     <li class="nav-item">
-                        <a style="margin-left: 10px; border: none" class="btn btn-outline-light" href="controlador?menu=Cliente" target="myFrame">Clientes</a>
+                        <a style="margin-left: 10px; border: none" class="btn btn-outline-light" href="controlador?menu=Cliente&accion=Listar" target="myFrame">Clientes</a>
                     </li>
                     <li class="nav-item">
-                        <a style="margin-left: 10px; border: none" class="btn btn-outline-light" href="controlador?menu=NuevaVenta" target="myFrame">Nueva Venta</a>
+                        <a style="margin-left: 10px; border: none" class="btn btn-outline-light" href="controlador?menu=NuevaVenta&accion=BuscarCliente" target="myFrame">Nueva Venta</a>
                     </li>
                 </ul>
-
-                <div class="dropdown">
+            </div>
+            
+            <div class="dropdown">
                     <button style="border: none;" class="btn btn-outline-light dropdown-toggle" type="button" 
                             data-toggle="dropdown" aria-expanded="false">
                         ${usuario.getNom()}
@@ -54,7 +55,6 @@
 
                     </div>
                 </div>
-            </div>
         </nav>
 
         <div class="m-4" style="height: 530px;">
