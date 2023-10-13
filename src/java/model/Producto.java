@@ -9,13 +9,22 @@ package model;
  * @author Jhon
  */
 public class Producto {
+    int id;
     String nom;
-    String pre;
-    String stock;
+    Double pre;
+    int stock;
     String estado;
     
     public Producto(){
         
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getNom() {
@@ -26,19 +35,19 @@ public class Producto {
         this.nom = nom;
     }
 
-    public String getPre() {
+    public Double getPre() {
         return pre;
     }
 
-    public void setPre(String pre) {
+    public void setPre(Double pre) {
         this.pre = pre;
     }
 
-    public String getStock() {
+    public int getStock() {
         return stock;
     }
 
-    public void setStock(String stock) {
+    public void setStock(int stock) {
         this.stock = stock;
     }
 

@@ -53,10 +53,11 @@ public class ProductoDAO {
             rs = ps.executeQuery();
             while (rs.next()) {
                 Producto pr = new Producto();
-                pr.setNom(rs.getString(1));
-                pr.setPre(rs.getString(2));
-                pr.setStock(rs.getString(3));
-                pr.setEstado(rs.getString(4));
+                pr.setId(rs.getInt(1));
+                pr.setNom(rs.getString(2));
+                pr.setPre(rs.getDouble(3));
+                pr.setStock(rs.getInt(4));
+                pr.setEstado(rs.getString(5));
 
                 lista.add(pr);
             }
@@ -66,16 +67,15 @@ public class ProductoDAO {
         return lista;
     }
 
-    public int agregar(Empleado em) {
-        String sql = "insert into cliente(Dni, Nombres, Telefono, Estado, User)values(?,?,?,?,?)";
+    public int agregar(Producto p) {
+        String sql = "insert into producto(Nombres, Precio, Stock, Estado)values(?,?,?,?)";
         try {
             con = cn.Conexion();
             ps = con.prepareStatement(sql);
-            ps.setString(1, em.getDni());
-            ps.setString(2, em.getNom());
-            ps.setString(3, em.getTel());
-            ps.setString(4, em.getEstado());
-            ps.setString(5, em.getUser());
+            ps.setString(1, p.getNom());
+            ps.setDouble(2, p.getPre());
+            ps.setInt(3, p.getStock());
+            ps.setString(4, p.getEstado());
             ps.executeUpdate();
         } catch (Exception e) {
             System.out.println("Fallo Agregar");
@@ -83,23 +83,23 @@ public class ProductoDAO {
         return r;
     }
 
-    public Empleado listarId(int id) {
-        Empleado emp = new Empleado();
-        String sql = "select * from empleado where IdEmpleado="+id;
+    public Producto listarId(int id) {
+        Producto pr = new Producto();
+        String sql = "select * from producto where IdProducto="+id;
         try{
             con = cn.Conexion();
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();//ejecuta la consulta
             while( rs.next() ){
-                emp.setDni(rs.getString(2));
-                emp.setNom(rs.getString(3));
-                emp.setTel(rs.getString(4));
-                emp.setEstado(rs.getString(5));
-                emp.setUser(rs.getString(6));
+                pr.setId(rs.getInt(1));
+                pr.setNom(rs.getString(2));
+                pr.setPre(rs.getDouble(3));
+                pr.setStock(rs.getInt(4));
+                pr.setEstado(rs.getString(5));
             }
         } catch(Exception e){
         }
-        return emp;
+        return pr;
     }
 
     public int actualizar(Empleado em) {
