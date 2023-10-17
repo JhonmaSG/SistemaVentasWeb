@@ -73,7 +73,7 @@
                     <div class="card-body">
                         <div class="d-flex col-sm-5 ml-auto">
                             <label>No.Serie:  </label>
-                            <input type="text" name="NroSerie" class="form-control">
+                            <input type="text" name="NroSerie" value="${nserie}" class="form-control">
                         </div>
                         <br>
                         <table class="table table-hover">
@@ -114,7 +114,7 @@
                         <input type="submit" name="accion" value="Cancelar" class="btn btn-danger">
                     </div>
                     <div class="col-sm-4 ml-auto">
-                        <input type="text" name="txtTotal" value="${totalPagar}" class="form-control">
+                        <input type="text" name="txtTotal" value="S/. ${totalPagar}0" class="form-control">
                     </div>
                 </div>
             </div>

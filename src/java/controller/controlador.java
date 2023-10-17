@@ -4,6 +4,7 @@
  */
 package controller;
 
+import config.GenerarSerie;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
@@ -19,41 +20,44 @@ import model.EmpleadoDAO;
 import model.Producto;
 import model.ProductoDAO;
 import model.Venta;
+import model.VentaDAO;
 
 /**
  *
  * @author Jhon
  */
-
 public class controlador extends HttpServlet {
 
     //INSTANCIAR LAS CLASES
     Empleado em = new Empleado();
     EmpleadoDAO edao = new EmpleadoDAO();
     int ide;
-    
+
     Cliente cl = new Cliente();
     ClienteDAO cdao = new ClienteDAO();
     int idc;
-    
+
     Producto pr = new Producto();
     ProductoDAO pdao = new ProductoDAO();
     int idp;
-    
+
     Venta v = new Venta();
-    List<Venta>lista = new ArrayList<>();
+    List<Venta> lista = new ArrayList<>();
     int item, cod, cantidad;
     String descripcion;
     double precio, subtotal;
-    
+
     double totalPagar;
+
+    VentaDAO vdao = new VentaDAO();
+    String numeroSerie;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
         String menu = request.getParameter("menu");
         String accion = request.getParameter("accion");//Accion recibe la accion del user
-        
+
         //Principal
         if (menu.equalsIgnoreCase("Principal")) {
             request.getRequestDispatcher("Principal.jsp").forward(request, response);
@@ -98,21 +102,21 @@ public class controlador extends HttpServlet {
                     em.setTel(tel1);
                     em.setEstado(estado1);
                     em.setUser(user1);
-                    
+
                     em.setId(ide);
                     edao.actualizar(em);
                     request.getRequestDispatcher("controlador?menu=Empleado&accion=Listar").forward(request, response);
                     break;
                 case "Delete":
-                    System.out.println("id before:"+request.getParameter("id"));
+                    System.out.println("id before:" + request.getParameter("id"));
                     ide = Integer.parseInt(request.getParameter("id")); //Capturar el id de la fila
-                    System.out.println("id before:"+ide);
-                    System.out.println("ide: "+ide);
+                    System.out.println("id before:" + ide);
+                    System.out.println("ide: " + ide);
                     edao.delete(ide);
                     request.getRequestDispatcher("controlador?menu=Empleado&accion=Listar").forward(request, response);
                     break;
                 default:
-                    System.out.println("Error Default switch ");                  
+                    System.out.println("Error Default switch ");
                     throw new AssertionError();
             }
         }
@@ -158,7 +162,7 @@ public class controlador extends HttpServlet {
                 case "Editar":
                     ide = Integer.parseInt(request.getParameter("id"));
                     Producto pl = pdao.listarId(ide);
-                    request.setAttribute("empelado",pl);
+                    request.setAttribute("empelado", pl);
                     break;
                 case "Actualizar":
                     String dni1 = request.getParameter("txtDni");
@@ -171,7 +175,7 @@ public class controlador extends HttpServlet {
                     em.setTel(tel1);
                     em.setEstado(estado1);
                     em.setUser(user1);
-                    
+
                     em.setId(ide);
                     edao.actualizar(em);
                     request.getRequestDispatcher("controlador?menu=Empleado&accion=Listar").forward(request, response);
@@ -188,29 +192,35 @@ public class controlador extends HttpServlet {
         }
         //Nueva Venta
         if (menu.equals("NuevaVenta")) {
-            switch(accion){
+            switch (accion) {
                 case "BuscarCliente":
                     String dni = request.getParameter("codigocliente");
                     //Estamos enviando el parametro a la claseDAO para que buscar el cliente de dese dni
                     cl.setDni(dni);
                     cl = cdao.buscar(dni);
                     request.setAttribute("c", cl);
+                    request.setAttribute("nserie", numeroSerie);
                     break;
                 case "BuscarProducto":
                     int id = parseInt(request.getParameter("codigoproducto"));
-                    pr=pdao.listarId(id);
-                    request.setAttribute("producto",pr);
-                    request.setAttribute("lista",lista);
+                    pr = pdao.listarId(id);
+                    request.setAttribute("c", cl);
+                    request.setAttribute("nserie", numeroSerie);
+                    request.setAttribute("producto", pr);
+                    request.setAttribute("lista", lista);
+                    request.setAttribute("totalPagar", totalPagar);
                     break;
                 case "AgregarProducto":
+                    request.setAttribute("c", cl);
+                    request.setAttribute("nserie", numeroSerie);
                     totalPagar = 0.0;
-                    item = item +1;
+                    item = item + 1;
                     cod = pr.getId();
                     descripcion = request.getParameter("nomproducto");
                     precio = Double.parseDouble(request.getParameter("precio"));
                     cantidad = Integer.parseInt(request.getParameter("cant"));
-                    subtotal = precio*cantidad;
-                    
+                    subtotal = precio * cantidad;
+
                     v = new Venta();    //Resetear valores
                     v.setItem(item);
                     v.setId(cod);
@@ -218,19 +228,31 @@ public class controlador extends HttpServlet {
                     v.setPrecio(precio);
                     v.setCantidad(cantidad);
                     v.setSubtotal(subtotal);
-                    
+
                     lista.add(v);
-                    for(int i = 0; i<lista.size(); i++){
-                        totalPagar += lista.get(i).getSubtotal(); 
+                    for (int i = 0; i < lista.size(); i++) {
+                        totalPagar += lista.get(i).getSubtotal();
                     }
-                    request.setAttribute("totalPagar",totalPagar);
+                    request.setAttribute("totalPagar", totalPagar);
                     //setAttribute(atributo, lista de los datos);
-                    request.setAttribute("lista",lista); 
+                    request.setAttribute("lista", lista);
                     break;
                 default:
-                    throw new AssertionError();
+                    //numeroSerie: Almacena el num maximo del numero de serie de esta en la BD
+                    numeroSerie = vdao.GenerarSerie();
+                    System.out.println("numeroSerie: "+numeroSerie);
+                    if (numeroSerie == null) {
+                        numeroSerie = "00000001";
+                        request.setAttribute("nserie", numeroSerie);
+                    } else {
+                        int incrementar = Integer.parseInt(numeroSerie);
+                        GenerarSerie gs = new GenerarSerie(); //Instanciar la clase generarSerie
+                        numeroSerie = gs.NumeroSerie(incrementar);//Enviar el numeroSerie al formulario
+                        request.setAttribute("nserie", numeroSerie);
+                    }
+                    request.getRequestDispatcher("RegistrarVenta.jsp").forward(request, response);
             }
-            request.getRequestDispatcher("/RegistrarVenta.jsp").forward(request, response);
+            request.getRequestDispatcher("RegistrarVenta.jsp").forward(request, response);
         }
     }
 
@@ -243,7 +265,6 @@ public class controlador extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
