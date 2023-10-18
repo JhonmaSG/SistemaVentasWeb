@@ -12,6 +12,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import static java.lang.Integer.parseInt;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import model.Cliente;
 import model.ClienteDAO;
@@ -223,7 +224,7 @@ public class controlador extends HttpServlet {
 
                     v = new Venta();    //Resetear valores
                     v.setItem(item);
-                    v.setId(cod);
+                    v.setIdproducto(cod);
                     v.setDescripcionP(descripcion);
                     v.setPrecio(precio);
                     v.setCantidad(cantidad);
@@ -237,10 +238,46 @@ public class controlador extends HttpServlet {
                     //setAttribute(atributo, lista de los datos);
                     request.setAttribute("lista", lista);
                     break;
+                case "GenerarVenta":
+                    for (int i = 0; i < lista.size(); i++) {
+                        Producto pr = new Producto();
+                        int cantidad = lista.get(i).getCantidad();
+                        int idProducto = lista.get(i).getIdproducto();
+                        //Ejecutar el método buscar
+                        ProductoDAO pDAO = new ProductoDAO();
+                        pr = pDAO.buscar(idProducto);//Método buscar: nos da el producto que contiene ese ID
+                        //Captura el Stock actual
+                        int stockActual = pr.getStock() - cantidad;
+                        pDAO.actualizarStock(idProducto, stockActual);
+                    }
+                    //Guardar Venta
+                    v.setIdcliente(cl.getId());
+                    v.setIdempleado(2);
+                    v.setNumSerie(numeroSerie);
+                    v.setFecha("2023-10-16");
+                    v.setMonto(totalPagar);
+                    v.setEstado("1");
+                    vdao.guardarVenta(v);
+                    //Guardar Detalle ventas
+                    int idv = Integer.parseInt(vdao.IdVentas());
+                    for (int i = 0; i < lista.size(); i++) {
+                        v = new Venta();
+                        v.setId(idv);
+                        v.setIdproducto(lista.get(i).getIdproducto());
+                        v.setCantidad(lista.get(i).getCantidad());
+                        v.setPrecio(lista.get(i).getPrecio());
+                        vdao.guardarDetalleVentas(v);
+                    }
+                    break;
                 default:
+                    v = new Venta();
+                    lista = new ArrayList<>();
+                    item = 0;
+                    totalPagar = 0;
+                    
                     //numeroSerie: Almacena el num maximo del numero de serie de esta en la BD
                     numeroSerie = vdao.GenerarSerie();
-                    System.out.println("numeroSerie: "+numeroSerie);
+                    System.out.println("numeroSerie: " + numeroSerie);
                     if (numeroSerie == null) {
                         numeroSerie = "00000001";
                         request.setAttribute("nserie", numeroSerie);
