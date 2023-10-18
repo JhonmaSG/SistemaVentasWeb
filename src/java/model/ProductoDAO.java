@@ -27,7 +27,7 @@ public class ProductoDAO {
     public Producto buscar(int id){
         Producto p = new Producto();
         
-        String sql = "select * from productos where idProducto = "+id;
+        String sql = "select * from producto where IdProducto = "+id;
         try {
             con = cn.Conexion();
             ps = con.prepareStatement(sql);
@@ -47,7 +47,7 @@ public class ProductoDAO {
     }
     
     public int actualizarStock(int id, int stock){
-        String sql = "update producto set Stock=? where idProducto=?";
+        String sql = "update producto set Stock=? where IdProducto=?";
         try{
             con = cn.Conexion();
             ps = con.prepareStatement(sql);
