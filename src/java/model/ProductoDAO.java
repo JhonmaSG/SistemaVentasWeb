@@ -42,6 +42,7 @@ public class ProductoDAO {
                 p.setEstado(rs.getString(5));
             }
         } catch (Exception e) {
+            System.out.println("Error BuscarPr: " + e.getMessage());
         }
         return p;
     }
@@ -57,7 +58,7 @@ public class ProductoDAO {
             
             ps.executeUpdate();
         } catch(Exception e){
-            
+            System.out.println("Error ActualizarStockPr: " + e.getMessage());
         }
         return r;
     }
@@ -78,6 +79,7 @@ public class ProductoDAO {
                 pr.setEstado(rs.getString(5));
             }
         } catch (Exception e) {
+            System.out.println("Error BuscarPr: " + e.getMessage());
         }
         return pr;
     }
@@ -101,7 +103,7 @@ public class ProductoDAO {
                 lista.add(pr);
             }
         } catch (Exception e) {
-            System.out.println("Fallo Listar");
+            System.out.println("Error ListarPr: " + e.getMessage());
         }
         return lista;
     }
@@ -117,7 +119,7 @@ public class ProductoDAO {
             ps.setString(4, p.getEstado());
             ps.executeUpdate();
         } catch (Exception e) {
-            System.out.println("Fallo Agregar");
+            System.out.println("Error AgregarPr: " + e.getMessage());
         }
         return r;
     }
@@ -137,6 +139,7 @@ public class ProductoDAO {
                 pr.setEstado(rs.getString(5));
             }
         } catch(Exception e){
+            System.out.println("Error ListarIdPr: " + e.getMessage());
         }
         return pr;
     }
@@ -153,6 +156,7 @@ public class ProductoDAO {
             ps.setInt(5, pr.getId());
             ps.executeUpdate();
         } catch (Exception e) {
+            System.out.println("Error ActualizarPr: " + e.getMessage());
         }
         return r;
     }
@@ -164,7 +168,7 @@ public class ProductoDAO {
             ps = con.prepareStatement(sql);
             ps.executeUpdate();
         } catch (Exception e) {
-            System.out.println("Error Delete: "+id);
+            System.out.println("Error DeletePr: " + e.getMessage());
         }
     }
 }

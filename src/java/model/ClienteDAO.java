@@ -39,7 +39,8 @@ public class ClienteDAO {
                 c.setEs(rs.getString(5));
             }
         } catch (Exception e) {
-        }
+            System.out.println("Error BuscarCl: "+ e.getMessage());
+        } 
         return c;
     }
 
@@ -61,8 +62,8 @@ public class ClienteDAO {
 
                 lista.add(cl);
             }
-        } catch (Exception e) {
-            System.out.println("Fallo Listar Clientes");
+        } catch ( Exception ex) {
+            System.out.println("Fallo ListarCl: "+ ex.getMessage());
         }
         return lista;
     }
@@ -78,7 +79,7 @@ public class ClienteDAO {
             ps.setString(4, cl.getEs());
             ps.executeUpdate();
         } catch (Exception e) {
-            System.out.println("Fallo Agregar");
+            System.out.println("Error AgregarCl: "+ e.getMessage());
         }
         return r;
     }
@@ -97,6 +98,7 @@ public class ClienteDAO {
                 cli.setEs(rs.getString(5));
             }
         } catch(Exception e){
+            System.out.println("Error ListarIdCl: "+ e.getMessage());
         }
         return cli;
     }
@@ -113,6 +115,7 @@ public class ClienteDAO {
             ps.setInt(5, cl.getId());
             ps.executeUpdate();
         } catch (Exception e) {
+            System.out.println("Error ActualizarCl: "+ e.getMessage());
         }
         return r;
     }
@@ -124,7 +127,7 @@ public class ClienteDAO {
             ps = con.prepareStatement(sql);
             ps.executeUpdate();
         } catch (Exception e) {
-            System.out.println("Error Delete: "+id);
+            System.out.println("Error DeleteCl: " + e.getMessage());
         }
     }
 }

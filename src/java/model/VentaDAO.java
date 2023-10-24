@@ -31,7 +31,8 @@ public class VentaDAO {
             while( rs.next() ){
                 numeroSerie = rs.getString(1);    
             }
-        } catch (Exception e){   
+        } catch (Exception e){
+            System.out.println("Error GenerarSerie: " + e.getMessage());
         }
         return numeroSerie;
     }
@@ -46,7 +47,8 @@ public class VentaDAO {
             while( rs.next() ){
                 idVentas = rs.getString(1);    
             }
-        } catch (Exception e){   
+        } catch (Exception e){
+            System.out.println("Error IdVentas: " + e.getMessage());
         }
         return idVentas;
     }
@@ -63,7 +65,8 @@ public class VentaDAO {
             ps.setDouble(5,ve.getPrecio());
             ps.setString(6,ve.getEstado());
             ps.executeUpdate();
-        } catch (Exception e){   
+        } catch (Exception e){
+            System.out.println("Error GuardarVenta: " + e.getMessage());
         }
         return r;
     }
@@ -78,7 +81,8 @@ public class VentaDAO {
             ps.setInt(3,venta.getCantidad());
             ps.setDouble(4,venta.getPrecio());
             ps.executeUpdate();
-        } catch (Exception e){   
+        } catch (Exception e){
+            System.out.println("Error GuardarDetalleVentas: " + e.getMessage());
         }
         return r;
     }

@@ -43,6 +43,7 @@ public class EmpleadoDAO {
                 em.setNom(rs.getString("Nombres"));
             }
         } catch (Exception e) {
+            System.out.println("Error ValidarEmp: "+ e.getMessage());
         }
         return em;
     }
@@ -67,7 +68,7 @@ public class EmpleadoDAO {
                 lista.add(em);
             }
         } catch (Exception e) {
-            System.out.println("Fallo Listar");
+            System.out.println("Error ListarEmp: "+ e.getMessage());
         }
         return lista;
     }
@@ -84,7 +85,7 @@ public class EmpleadoDAO {
             ps.setString(5, em.getUser());
             ps.executeUpdate();
         } catch (Exception e) {
-            System.out.println("Fallo Agregar");
+            System.out.println("Error AgregarEmp: "+ e.getMessage());
         }
         return r;
     }
@@ -104,6 +105,7 @@ public class EmpleadoDAO {
                 emp.setUser(rs.getString(6));
             }
         } catch(Exception e){
+            System.out.println("Error ListarIdEmp: "+ e.getMessage());
         }
         return emp;
     }
@@ -121,6 +123,7 @@ public class EmpleadoDAO {
             ps.setInt(6, em.getId());
             ps.executeUpdate();
         } catch (Exception e) {
+            System.out.println("Error ActualizarEmp: "+ e.getMessage());
         }
         return r;
     }
@@ -132,7 +135,7 @@ public class EmpleadoDAO {
             ps = con.prepareStatement(sql);
             ps.executeUpdate();
         } catch (Exception e) {
-            System.out.println("Error Delete: "+id);
+            System.out.println("Error DeleteEmp: " +  e.getMessage());
         }
     }
 }

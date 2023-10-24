@@ -6,6 +6,7 @@ package config;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.SQLException;
 
 /**
  *
@@ -20,8 +21,10 @@ public class conexion {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             con = DriverManager.getConnection(url, user, password);
-        } catch (Exception e) {
-            System.out.println("Error al conectar con la Base de Datos");
+        } catch ( ClassNotFoundException ex) {
+            System.out.println("Error1 DriverBD: " + ex.getMessage());
+        } catch ( SQLException ex) {
+            System.out.println("Error2 DriverBD: " + ex.getMessage());
         }
         return con;
     }

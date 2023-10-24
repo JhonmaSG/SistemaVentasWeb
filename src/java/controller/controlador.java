@@ -70,7 +70,6 @@ public class controlador extends HttpServlet {
                     List lista = edao.listar();
                     request.setAttribute("empleados", lista);
                     request.getRequestDispatcher("Empleado.jsp").forward(request, response);
-                    System.out.println("Listo Correctamente");
                     break;
                 case "Agregar":
                     String dni = request.getParameter("txtDni");
@@ -128,7 +127,6 @@ public class controlador extends HttpServlet {
                     List lista = cdao.listar();
                     request.setAttribute("clientes", lista);
                     request.getRequestDispatcher("Clientes.jsp").forward(request, response);
-                    System.out.println("Listo Correctamente");
                     break;
                 case "Agregar":
                     String dni = request.getParameter("txtDni");
@@ -310,7 +308,6 @@ public class controlador extends HttpServlet {
                     
                     //numeroSerie: Almacena el num maximo del numero de serie de esta en la BD
                     numeroSerie = vdao.GenerarSerie();
-                    System.out.println("numeroSerie: " + numeroSerie);
                     if (numeroSerie == null) {
                         numeroSerie = "00000001";
                         request.setAttribute("nserie", numeroSerie);
