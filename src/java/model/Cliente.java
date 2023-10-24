@@ -18,6 +18,15 @@ public class Cliente {
     public Cliente() {
     }
 
+    public Cliente(int id, String dni, String nom, String dir, String es) {
+        this.id = id;
+        this.dni = dni;
+        this.nom = nom;
+        this.dir = dir;
+        this.es = es;
+    }
+    
+
     public int getId() {
         return id;
     }

@@ -62,24 +62,24 @@ public class ProductoDAO {
         return r;
     }
 
-    public Cliente buscar(String dni) {
-        Cliente c = new Cliente();
-        String sql = "select * from cliente where Dni="+dni;
+    public Producto buscar(String dni) {
+        Producto pr = new Producto();
+        String sql = "select * from producto where IdProducto="+dni;
         try {
             con = cn.Conexion();
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();
             while (rs.next()) {
                 //em = Entidad Empleado
-                c.setId(rs.getInt(1));
-                c.setDni(rs.getString(2));
-                c.setNom(rs.getString(3));
-                c.setDir(rs.getString(4));
-                c.setEs(rs.getString(5));
+                pr.setId(rs.getInt(1));
+                pr.setNom(rs.getString(2));
+                pr.setPre(rs.getDouble(3));
+                pr.setStock(rs.getInt(4));
+                pr.setEstado(rs.getString(5));
             }
         } catch (Exception e) {
         }
-        return c;
+        return pr;
     }
 
     //Operaciones CRUD
@@ -141,17 +141,16 @@ public class ProductoDAO {
         return pr;
     }
 
-    public int actualizar(Empleado em) {
-        String sql = "update cliente set Dni=?, Nombres=?, Telefono=?, Estado=?, User=? where IdEmpleado=?";
+    public int actualizar(Producto pr) {
+        String sql = "update cliente set Nombres=?, Precio=?, Stock=?, Estado=? where IdProducto=?";
         try {
             con = cn.Conexion();
             ps = con.prepareStatement(sql);
-            ps.setString(1, em.getDni());
-            ps.setString(2, em.getNom());
-            ps.setString(3, em.getTel());
-            ps.setString(4, em.getEstado());
-            ps.setString(5, em.getUser());
-            ps.setInt(6, em.getId());
+            ps.setString(1, pr.getNom());
+            ps.setDouble(2, pr.getPre());
+            ps.setInt(3, pr.getStock());
+            ps.setString(4, pr.getEstado());
+            ps.setInt(5, pr.getId());
             ps.executeUpdate();
         } catch (Exception e) {
         }
@@ -159,7 +158,7 @@ public class ProductoDAO {
     }
 
     public void delete(int id) {
-        String sql = "delete from empleado where IdEmpleado=" + id;
+        String sql = "delete from producto where IdProducto=" + id;
         try {
             con = cn.Conexion();
             ps = con.prepareStatement(sql);

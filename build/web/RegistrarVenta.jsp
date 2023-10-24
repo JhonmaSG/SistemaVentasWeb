@@ -38,7 +38,7 @@
                                     <input type="submit" name="accion" value="BuscarCliente" class="btn btn-outline-info">
                                 </div>
                                 <div class="col-sm-6">
-                                    <input type="text" name="nombrescliente" value="${c.getNom()}" placeholder="Datos Cliente" class="form-control">
+                                    <input type="text" name="nombrescliente" value="${c.getNom()}" placeholder="Datos Cliente" class="form-control" readonly>
                                 </div>                            
                             </div>
 
@@ -52,19 +52,19 @@
                                     <button type="submit" name="accion" value="BuscarProducto" class="btn btn-outline-info">Buscar</button>
                                 </div>
                                 <div class="col-sm-6">
-                                    <input type="text" name="nomproducto" value="${producto.getNom()}" placeholder="Datos Producto" class="form-control">
+                                    <input type="text" name="nomproducto" value="${producto.getNom()}" placeholder="Nombre Producto" class="form-control" readonly>
                                 </div>
                             </div>
                             <!-- $ { attribute.getNom() } : atributo . metodo para traer el valor del producto o nombre -->
                             <div class="form-group d-flex">
                                 <div class="col-sm-6 d-flex">
-                                    <input type="text" name="precio" value="${producto.getPre()}" class="form-control" placeholder="S/.0.00">
+                                    <input type="text" name="precio" value="${producto.getPre()}" class="form-control" placeholder="S/.0.00" readonly>
                                 </div>
                                 <div class="col-sm-3">
                                     <input type="number" name="cant" value="1" placeholder="" class="form-control">
                                 </div>
                                 <div class="col-sm-3">
-                                    <input type="text" name="stock" value="${producto.getStock()}" placeholder="Shock" class="form-control">
+                                    <input type="text" name="stock" value="${producto.getStock()}" placeholder="Shock" class="form-control" readonly>
                                 </div>
                             </div>
                             <!--BOTON AGREGAR PRODUCTO AL REGISTRO-->
@@ -80,7 +80,7 @@
                     <div class="card-body">
                         <div class="d-flex col-sm-5 ml-auto">
                             <label>No.Serie:  </label>
-                            <input type="text" name="NroSerie" value="${nserie}" class="form-control">
+                            <input type="text" name="NroSerie" value="${nserie}" class="form-control" readonly>
                         </div>
                         <br>
                         <table class="table table-hover">

@@ -19,6 +19,15 @@ public class Producto {
         
     }
 
+    public Producto(int id, String nom, Double pre, int stock, String estado) {
+        this.id = id;
+        this.nom = nom;
+        this.pre = pre;
+        this.stock = stock;
+        this.estado = estado;
+    }
+    
+
     public int getId() {
         return id;
     }
