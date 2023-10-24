@@ -20,7 +20,7 @@
                 <div class="card-body">
                     <form action="controlador?menu=Producto" method="POST">
                         <div class="form-group">
-                            <label>Dni</label>
+                            <label>Nombre</label>
                             <input type="text" value="${producto.getNom()}" name="txtNom" class="form-control">
                         </div>
                         <div class="form-group">

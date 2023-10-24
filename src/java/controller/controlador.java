@@ -12,7 +12,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import static java.lang.Integer.parseInt;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import model.Cliente;
 import model.ClienteDAO;
@@ -197,16 +196,18 @@ public class controlador extends HttpServlet {
                     request.setAttribute("producto", pl);
                     break;
                 case "Actualizar":
+                    System.out.println("id before: "+idp);
+                    //idp = Integer.parseInt(request.getParameter("id"));
                     String nom1 = request.getParameter("txtNom");
-                    String pre1 = request.getParameter("txtPre");
+                    Double pre1 = Double.parseDouble(request.getParameter("txtPre"));
                     int st1 = Integer.parseInt(request.getParameter("txtStock"));
                     String estado1 = request.getParameter("txtEstado");
+                    pr.setId(idp);
                     pr.setNom(nom1);
-                    pr.setNom(pre1);
+                    pr.setPre(pre1);
                     pr.setStock(st1);
                     pr.setEstado(estado1);
 
-                    pr.setId(idp);
                     pdao.actualizar(pr);
                     request.getRequestDispatcher("controlador?menu=Producto&accion=Listar").forward(request, response);
                     break;
@@ -227,7 +228,6 @@ public class controlador extends HttpServlet {
                     String dni = request.getParameter("codigocliente");
                     //Estamos enviando el parametro a la claseDAO para que buscar el cliente de dese dni
                     cl.setDni(dni);
-                    //cl.setDir(dni);
                     
                     cl = cdao.buscar(dni);
                     request.setAttribute("c", cl);

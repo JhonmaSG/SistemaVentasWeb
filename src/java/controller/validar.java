@@ -10,6 +10,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import model.Empleado;
 import model.EmpleadoDAO;
 
@@ -34,10 +35,12 @@ public class validar extends HttpServlet {
             String user = request.getParameter("txtuser");
             String pass = request.getParameter("txtpass");
             em = edao.validar(user, pass);
-            if (em.getUser() != null) {
-                request.setAttribute("usuario", em);
-                request.getRequestDispatcher("controlador?menu=Principal")
-                        .forward(request, response);
+            if (em.getUser() != null) {//Si trajo algo de la base de datos
+                System.out.println("Ingreso Sesion OK");
+                HttpSession sesion = request.getSession();
+                System.out.println("Sesion numero1: "+ sesion.getId());
+                sesion.setAttribute("usuario", em);//clase: "usuario"
+                request.getRequestDispatcher("controlador?menu=Principal").forward(request, response);
             } else {
                 request.getRequestDispatcher("index.jsp")
                         .forward(request, response);

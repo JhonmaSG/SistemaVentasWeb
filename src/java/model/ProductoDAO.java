@@ -63,27 +63,6 @@ public class ProductoDAO {
         return r;
     }
 
-    public Producto buscar(String dni) {
-        Producto pr = new Producto();
-        String sql = "select * from producto where IdProducto="+dni;
-        try {
-            con = cn.Conexion();
-            ps = con.prepareStatement(sql);
-            rs = ps.executeQuery();
-            while (rs.next()) {
-                //em = Entidad Empleado
-                pr.setId(rs.getInt(1));
-                pr.setNom(rs.getString(2));
-                pr.setPre(rs.getDouble(3));
-                pr.setStock(rs.getInt(4));
-                pr.setEstado(rs.getString(5));
-            }
-        } catch (Exception e) {
-            System.out.println("Error BuscarPr: " + e.getMessage());
-        }
-        return pr;
-    }
-
     //Operaciones CRUD
     public List listar() {
         String sql = "select * from producto";
