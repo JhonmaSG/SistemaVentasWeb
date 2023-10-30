@@ -12,7 +12,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import static java.lang.Integer.parseInt;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import model.Cliente;
 import model.ClienteDAO;
@@ -62,6 +61,9 @@ public class controlador extends HttpServlet {
         //Principal
         if (menu.equalsIgnoreCase("Principal")) {
             request.getRequestDispatcher("Principal.jsp").forward(request, response);
+        }
+        if (menu.equalsIgnoreCase("Home")) {
+            request.getRequestDispatcher("Home.jsp").forward(request, response);
         }
         //Empleado
         if (menu.equals("Empleado")) {
@@ -138,13 +140,13 @@ public class controlador extends HttpServlet {
                     cl.setDir(dir);
                     cl.setEs(estado);
                     cdao.agregar(cl);
-                    request.getRequestDispatcher("controlador?menu=Clientes&accion=Listar").forward(request, response);
+                    request.getRequestDispatcher("controlador?menu=Cliente&accion=Listar").forward(request, response);
                     break;
                 case "Editar":
                     idc = Integer.parseInt(request.getParameter("id"));
                     Cliente c = cdao.listarId(idc);
                     request.setAttribute("cliente", c);
-                    request.getRequestDispatcher("controlador?menu=Clientes&accion=Listar").forward(request, response);
+                    request.getRequestDispatcher("controlador?menu=Cliente&accion=Listar").forward(request, response);
                     break;
                 case "Actualizar":
                     String dni1 = request.getParameter("txtDni");
@@ -158,7 +160,7 @@ public class controlador extends HttpServlet {
 
                     cl.setId(idc);
                     cdao.actualizar(cl);
-                    request.getRequestDispatcher("controlador?menu=Clientes&accion=Listar").forward(request, response);
+                    request.getRequestDispatcher("controlador?menu=Cliente&accion=Listar").forward(request, response);
                     break;
                 case "Delete":
                     idc = Integer.parseInt(request.getParameter("id")); //Capturar el id de la fila
@@ -197,16 +199,18 @@ public class controlador extends HttpServlet {
                     request.setAttribute("producto", pl);
                     break;
                 case "Actualizar":
+                    System.out.println("id before: "+idp);
+                    //idp = Integer.parseInt(request.getParameter("id"));
                     String nom1 = request.getParameter("txtNom");
-                    String pre1 = request.getParameter("txtPre");
+                    Double pre1 = Double.parseDouble(request.getParameter("txtPre"));
                     int st1 = Integer.parseInt(request.getParameter("txtStock"));
                     String estado1 = request.getParameter("txtEstado");
+                    pr.setId(idp);
                     pr.setNom(nom1);
-                    pr.setNom(pre1);
+                    pr.setPre(pre1);
                     pr.setStock(st1);
                     pr.setEstado(estado1);
 
-                    pr.setId(idp);
                     pdao.actualizar(pr);
                     request.getRequestDispatcher("controlador?menu=Producto&accion=Listar").forward(request, response);
                     break;
@@ -227,7 +231,6 @@ public class controlador extends HttpServlet {
                     String dni = request.getParameter("codigocliente");
                     //Estamos enviando el parametro a la claseDAO para que buscar el cliente de dese dni
                     cl.setDni(dni);
-                    //cl.setDir(dni);
                     
                     cl = cdao.buscar(dni);
                     request.setAttribute("c", cl);

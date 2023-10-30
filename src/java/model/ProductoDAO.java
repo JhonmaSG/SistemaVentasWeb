@@ -145,7 +145,7 @@ public class ProductoDAO {
     }
 
     public int actualizar(Producto pr) {
-        String sql = "update cliente set Nombres=?, Precio=?, Stock=?, Estado=? where IdProducto=?";
+        String sql = "update producto set Nombres=?, Precio=?, Stock=?, Estado=? where IdProducto=?";
         try {
             con = cn.Conexion();
             ps = con.prepareStatement(sql);
