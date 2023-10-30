@@ -15,17 +15,19 @@ public class Empleado {
     String tel;
     String estado;
     String user;
+    String password;
 
     public Empleado() {
     }
 
-    public Empleado(int id, String dni, String nom, String tel, String state, String user) {
+    public Empleado(int id, String dni, String nom, String tel, String state, String user, String password) {
         this.id = id;
         this.dni = dni;
         this.nom = nom;
         this.tel = tel;
         this.estado = state;
         this.user = user;
+        this.password = password;
     }
 
     public int getId() {
@@ -74,6 +76,14 @@ public class Empleado {
 
     public void setUser(String user) {
         this.user = user;
+    }
+    
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
     
     
