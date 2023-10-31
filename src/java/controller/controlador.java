@@ -10,8 +10,11 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import static java.lang.Integer.parseInt;
+import java.security.MessageDigest;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 import model.Cliente;
 import model.ClienteDAO;
@@ -29,6 +32,7 @@ import model.VentaDAO;
 public class controlador extends HttpServlet {
 
     //INSTANCIAR LAS CLASES
+    Empleado usuario;
     Empleado em = new Empleado();
     EmpleadoDAO edao = new EmpleadoDAO();
     int ide;
@@ -52,35 +56,27 @@ public class controlador extends HttpServlet {
     VentaDAO vdao = new VentaDAO();
     String numeroSerie;
 
+    HttpSession sesion;
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
         String menu = request.getParameter("menu");
         String accion = request.getParameter("accion");//Accion recibe la accion del user
-        
-        /*
-        En constructor
-        ProcessRequest{
-            //Declara menu, accion
-            HttpSession sesion = request.getSession();
-            Empleado us = (Empleado) session.Attribute("usuario");
-            if( us != null ){
-                //Código
-            }else {
-                request.getRequestDspatcher("index.jsp").forward(request, response);
-            }
-        }
-        */
 
         //Principal
         if (menu.equalsIgnoreCase("Principal")) {
+            HttpSession sesion = request.getSession();
+            usuario = (Empleado) sesion.getAttribute("usuario");
             request.getRequestDispatcher("Principal.jsp").forward(request, response);
         }
         if (menu.equalsIgnoreCase("Home")) {
+            request.setAttribute("usuario", usuario);
             request.getRequestDispatcher("Home.jsp").forward(request, response);
         }
         //Empleado
         if (menu.equals("Empleado")) {
+            request.setAttribute("usuario", usuario);
             switch (accion) {
                 case "Listar":
                     List lista = edao.listar();
@@ -93,11 +89,14 @@ public class controlador extends HttpServlet {
                     String tel = request.getParameter("txtTel");
                     String estado = request.getParameter("txtEstado");
                     String user = request.getParameter("txtUser");
+                    String password = asegurarClave(request.getParameter("clave"));
                     em.setDni(dni);
                     em.setNom(nom);
                     em.setTel(tel);
                     em.setEstado(estado);
                     em.setUser(user);
+                    em.setPassword(password);
+                    
                     edao.agregar(em);
                     request.getRequestDispatcher("controlador?menu=Empleado&accion=Listar").forward(request, response);
                     break;
@@ -213,7 +212,7 @@ public class controlador extends HttpServlet {
                     request.setAttribute("producto", pl);
                     break;
                 case "Actualizar":
-                    System.out.println("id before: "+idp);
+                    System.out.println("id before: " + idp);
                     //idp = Integer.parseInt(request.getParameter("id"));
                     String nom1 = request.getParameter("txtNom");
                     Double pre1 = Double.parseDouble(request.getParameter("txtPre"));
@@ -245,7 +244,7 @@ public class controlador extends HttpServlet {
                     String dni = request.getParameter("codigocliente");
                     //Estamos enviando el parametro a la claseDAO para que buscar el cliente de dese dni
                     cl.setDni(dni);
-                    
+
                     cl = cdao.buscar(dni);
                     request.setAttribute("c", cl);
                     request.setAttribute("nserie", numeroSerie);
@@ -322,7 +321,7 @@ public class controlador extends HttpServlet {
                     lista = new ArrayList<>();
                     item = 0;
                     totalPagar = 0;
-                    
+
                     //numeroSerie: Almacena el num maximo del numero de serie de esta en la BD
                     numeroSerie = vdao.GenerarSerie();
                     if (numeroSerie == null) {
@@ -340,7 +339,22 @@ public class controlador extends HttpServlet {
         }
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    private String asegurarClave(String clave) {
+        String claveSHA = null;
+
+        try {
+            //Instanciamos el tipo de Hash
+            MessageDigest sha256 = MessageDigest.getInstance("SHA-256");
+            //Pasaa: clave a bytes
+            sha256.update(clave.getBytes());
+            claveSHA = Base64.getEncoder().encodeToString(sha256.digest());
+        } catch (Exception ex) {
+            System.out.println("ERROR to SHA256\n" + ex);
+        }
+        return claveSHA;
+    }
+// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+
     /**
      * Handles the HTTP <code>GET</code> method.
      *

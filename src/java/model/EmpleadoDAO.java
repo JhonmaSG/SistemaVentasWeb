@@ -23,29 +23,50 @@ public class EmpleadoDAO {
     ResultSet rs;
     int r;
 
-    public Empleado validar(String user, String dni) {
-        //Instanciar la clase Empleado
+    public Empleado validar(String user, String clave) {
         Empleado em = new Empleado();
-        String sql = "select * from empleado where User=? and Dni=?";
+        String sql = "select * from empleado where User=? and Password=?";
         try {
             con = cn.Conexion();
             ps = con.prepareStatement(sql);
-            //Asignar los valores que vienen como aprametro dentro de nuestra
-            //consulta sql
+
             ps.setString(1, user);
-            ps.setString(2, dni);
+            ps.setString(2, clave);
+            System.out.println("Userrrr: "+user);
+            System.out.println("Claveeee: "+clave);
             rs = ps.executeQuery();
             while (rs.next()) {
-                //em = Entidad Empleado
                 em.setId(rs.getInt("IdEmpleado"));
+                //System.out.println("Id BD:"+em.getId());
                 em.setUser(rs.getString("User"));
+                //System.out.println("User BD:"+em.getUser());
                 em.setDni(rs.getString("Dni"));
+                //System.out.println("DNI BD:"+em.getDni());
                 em.setNom(rs.getString("Nombres"));
+                //System.out.println("NOM BD:"+em.getNom());
             }
         } catch (Exception e) {
             System.out.println("Error ValidarEmp: "+ e.getMessage());
         }
         return em;
+    }
+    
+    public boolean validarPassword(String usuario, String clave){
+        String sql = "select Password from empleado where User ="+usuario;
+        try{
+            con = cn.Conexion();
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            
+            String pass = rs.getString(7);
+            System.out.println("Pazz: "+pass);
+            
+            
+        } catch(Exception e){
+            System.out.println("Error ListarEmp: "+ e.getMessage());
+        }
+        
+        return false;
     }
 
     //Operaciones CRUD
@@ -64,6 +85,7 @@ public class EmpleadoDAO {
                 em.setTel(rs.getString(4));
                 em.setEstado(rs.getString(5));
                 em.setUser(rs.getString(6));
+                em.setPassword(rs.getString(7));
 
                 lista.add(em);
             }
@@ -74,7 +96,8 @@ public class EmpleadoDAO {
     }
 
     public int agregar(Empleado em) {
-        String sql = "insert into empleado(Dni, Nombres, Telefono, Estado, User)values(?,?,?,?,?)";
+        String sql = "insert into empleado(Dni, Nombres, Telefono, Estado, User, Password)"
+                + "values(?,?,?,?,?,?)";
         try {
             con = cn.Conexion();
             ps = con.prepareStatement(sql);
@@ -83,6 +106,7 @@ public class EmpleadoDAO {
             ps.setString(3, em.getTel());
             ps.setString(4, em.getEstado());
             ps.setString(5, em.getUser());
+            ps.setString(6, em.getPassword());
             ps.executeUpdate();
         } catch (Exception e) {
             System.out.println("Error AgregarEmp: "+ e.getMessage());
@@ -103,6 +127,7 @@ public class EmpleadoDAO {
                 emp.setTel(rs.getString(4));
                 emp.setEstado(rs.getString(5));
                 emp.setUser(rs.getString(6));
+                emp.setPassword(rs.getString(7));
             }
         } catch(Exception e){
             System.out.println("Error ListarIdEmp: "+ e.getMessage());
@@ -111,7 +136,7 @@ public class EmpleadoDAO {
     }
 
     public int actualizar(Empleado em) {
-        String sql = "update empleado set Dni=?, Nombres=?, Telefono=?, Estado=?, User=? where IdEmpleado=?";
+        String sql = "update empleado set Dni=?, Nombres=?, Telefono=?, Estado=?, User=?, Password=? where IdEmpleado=?";
         try {
             con = cn.Conexion();
             ps = con.prepareStatement(sql);
@@ -120,7 +145,8 @@ public class EmpleadoDAO {
             ps.setString(3, em.getTel());
             ps.setString(4, em.getEstado());
             ps.setString(5, em.getUser());
-            ps.setInt(6, em.getId());
+            ps.setString(6, em.getPassword());
+            ps.setInt(7, em.getId());
             ps.executeUpdate();
         } catch (Exception e) {
             System.out.println("Error ActualizarEmp: "+ e.getMessage());

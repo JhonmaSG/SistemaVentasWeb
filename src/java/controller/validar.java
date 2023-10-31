@@ -4,13 +4,15 @@
  */
 package controller;
 
+import static config.Hash.encriptar;
 import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.security.MessageDigest;
+import java.util.Base64;
 import model.Empleado;
 import model.EmpleadoDAO;
 
@@ -30,32 +32,53 @@ public class validar extends HttpServlet {
 
         String accion = request.getParameter("accion");
 
-        if (accion.equalsIgnoreCase("Ingresar")) {
+        if (accion.equals("Ingresar")) {
             //Capturar los datos que esta ingresando el usuario
             String user = request.getParameter("txtuser");
             String pass = request.getParameter("txtpass");
-            em = edao.validar(user, pass);
+
+            String passEncriptada = encriptar(pass);
+            System.out.println("contra encriptada: " + passEncriptada);
+            System.out.println("tamaño String: " + passEncriptada.length());
+
+            em = edao.validar(user, passEncriptada);
+
             if (em.getUser() != null) {//Si trajo algo de la base de datos
                 System.out.println("Ingreso Sesion OK");
                 HttpSession sesion = request.getSession();
-                System.out.println("Sesion numero1: " + sesion.getId());
+                //System.out.println("User: "+em.getUser());
+
+                //System.out.println("Id original: "+em.getId());
+                //System.out.println("Sesion numero1: " + sesion.getId());
                 sesion.setAttribute("usuario", em);//clase: "usuario"
-                request.getRequestDispatcher("controlador?menu=Principal").forward(request, response);
+                request.getRequestDispatcher("controlador?menu=Principal")
+                        .forward(request, response);
             } else {
                 request.getRequestDispatcher("index.jsp")
                         .forward(request, response);
             }
-        }else if(accion.equalsIgnoreCase("Salir")){
-
+        } else {
             HttpSession sesion = request.getSession();
             sesion.removeAttribute("usuario");
             sesion.invalidate();
-            request.getRequestDispatcher("controlador?menu=Principal").forward(request, response);
-
-        }else {
             request.getRequestDispatcher("index.jsp")
                     .forward(request, response);
         }
+    }
+
+    private String asegurarClave(String clave) {
+        String claveSHA = null;
+
+        try {
+            //Instanciamos el tipo de Hash
+            MessageDigest sha256 = MessageDigest.getInstance("SHA-256");
+            //Pasa: clave a bytes
+            sha256.update(clave.getBytes());
+            claveSHA = Base64.getEncoder().encodeToString(sha256.digest());
+        } catch (Exception ex) {
+            System.out.println("ERROR to SHA256\n" + ex);
+        }
+        return claveSHA;
     }
 
     @Override
@@ -68,6 +91,7 @@ public class validar extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
+
     }
 
     @Override
