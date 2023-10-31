@@ -57,6 +57,20 @@ public class controlador extends HttpServlet {
 
         String menu = request.getParameter("menu");
         String accion = request.getParameter("accion");//Accion recibe la accion del user
+        
+        /*
+        En constructor
+        ProcessRequest{
+            //Declara menu, accion
+            HttpSession sesion = request.getSession();
+            Empleado us = (Empleado) session.Attribute("usuario");
+            if( us != null ){
+                //Código
+            }else {
+                request.getRequestDspatcher("index.jsp").forward(request, response);
+            }
+        }
+        */
 
         //Principal
         if (menu.equalsIgnoreCase("Principal")) {

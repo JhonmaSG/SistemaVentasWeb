@@ -38,25 +38,32 @@ public class validar extends HttpServlet {
             if (em.getUser() != null) {//Si trajo algo de la base de datos
                 System.out.println("Ingreso Sesion OK");
                 HttpSession sesion = request.getSession();
-                System.out.println("Sesion numero1: "+ sesion.getId());
+                System.out.println("Sesion numero1: " + sesion.getId());
                 sesion.setAttribute("usuario", em);//clase: "usuario"
                 request.getRequestDispatcher("controlador?menu=Principal").forward(request, response);
             } else {
                 request.getRequestDispatcher("index.jsp")
                         .forward(request, response);
             }
-        } else {
+        }else if(accion.equalsIgnoreCase("Salir")){
+
+            HttpSession sesion = request.getSession();
+            sesion.removeAttribute("usuario");
+            sesion.invalidate();
+            request.getRequestDispatcher("controlador?menu=Principal").forward(request, response);
+
+        }else {
             request.getRequestDispatcher("index.jsp")
                     .forward(request, response);
         }
     }
-    
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
-    
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
