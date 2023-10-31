@@ -5,6 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="model.Empleado" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -14,10 +15,9 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>Bienvenido</h1>
-        <label value="${empleado.getNom()}"></label>
+        <h1 class="display-1" style="text-align: center;">Bienvenido ${usuario.getNom()}</h1>
         
-        <img src="img/font1.jpg" class="img-fluid" alt="">
+        <img src="img/font1.jpg" class="rounded mx-auto d-block"" alt="">
         
         <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
