@@ -7,16 +7,19 @@ package controller;
 import config.GenerarSerie;
 import static config.Hash.encriptar;
 import java.io.IOException;
+
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+
 import static java.lang.Integer.parseInt;
 import java.security.MessageDigest;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
+
 import model.Cliente;
 import model.ClienteDAO;
 import model.Empleado;
@@ -57,6 +60,7 @@ public class controlador extends HttpServlet {
     VentaDAO vdao = new VentaDAO();
     String numeroSerie;
 
+    //Almacena los datos y asocia un cliente a través de un identificador (ID de sesión)
     HttpSession sesion;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -66,6 +70,10 @@ public class controlador extends HttpServlet {
         String accion = request.getParameter("accion");//Accion recibe la accion del user
 
         //Principal
+        if (menu == null) {
+            request.setAttribute("usuario", usuario);
+            request.getRequestDispatcher("Home.jsp").forward(request, response);
+        }
         if (menu.equals("Principal")) {
             HttpSession sesion = request.getSession();
             usuario = (Empleado) sesion.getAttribute("usuario");
@@ -91,17 +99,17 @@ public class controlador extends HttpServlet {
                     String estado = request.getParameter("txtEstado");
                     String user = request.getParameter("txtUser");
                     String password = request.getParameter("txtPassword");
-                    
+
                     String passEncriptada = encriptar(password);
                     //System.out.println("contra encriptada Controlador: " + passEncriptada);
-                    
+
                     em.setDni(dni);
                     em.setNom(nom);
                     em.setTel(tel);
                     em.setEstado(estado);
                     em.setUser(user);
                     em.setPassword(passEncriptada);
-                    
+
                     edao.agregar(em);
                     request.getRequestDispatcher("controlador?menu=Empleado&accion=Listar").forward(request, response);
                     break;
@@ -342,16 +350,12 @@ public class controlador extends HttpServlet {
             }
             request.getRequestDispatcher("RegistrarVenta.jsp").forward(request, response);
         }
-        
+
         if (menu.equals("Ayuda")) {
             request.setAttribute("usuario", usuario);
             request.getRequestDispatcher("Ayuda.jsp").forward(request, response);
         }
-        
-        if( menu == null ){
-            request.setAttribute("usuario", usuario);
-            request.getRequestDispatcher("Home.jsp").forward(request, response);
-        }
+
     }
 
     private String asegurarClave(String clave) {

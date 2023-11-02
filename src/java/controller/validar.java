@@ -63,6 +63,7 @@ public class validar extends HttpServlet {
         }
     }
 
+    
     private String asegurarClave(String clave) {
         String claveSHA = null;
 

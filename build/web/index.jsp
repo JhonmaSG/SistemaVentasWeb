@@ -20,7 +20,8 @@
                         <div class="form-group text-center">
                             <h3>Login</h3>
                             <img src="img/logo2.PNG" alt="70" width="170"/>
-                            <label>Bienvenido a Pamazon</label>
+                            
+                            <label><br>Bienvenido a Pamazon</label>
                         </div>
                         <div class="form-group">
                             <label>Usuario:</label>

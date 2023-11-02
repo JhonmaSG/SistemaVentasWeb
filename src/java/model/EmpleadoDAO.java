@@ -8,6 +8,7 @@ import config.conexion;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,7 +42,7 @@ public class EmpleadoDAO {
                 em.setDni(rs.getString("Dni"));
                 em.setNom(rs.getString("Nombres"));
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
             System.out.println("Error ValidarEmp: "+ e.getMessage());
         }
         return em;
@@ -58,7 +59,7 @@ public class EmpleadoDAO {
             System.out.println("Pazz: "+pass);
             
             
-        } catch(Exception e){
+        } catch(SQLException e){
             System.out.println("Error ListarEmp: "+ e.getMessage());
         }
         
@@ -85,7 +86,7 @@ public class EmpleadoDAO {
 
                 lista.add(em);
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
             System.out.println("Error ListarEmp: "+ e.getMessage());
         }
         return lista;
@@ -104,7 +105,7 @@ public class EmpleadoDAO {
             ps.setString(5, em.getUser());
             ps.setString(6, em.getPassword());
             ps.executeUpdate();
-        } catch (Exception e) {
+        } catch (SQLException e) {
             System.out.println("Error AgregarEmp: "+ e.getMessage());
         }
         return r;
@@ -125,7 +126,7 @@ public class EmpleadoDAO {
                 emp.setUser(rs.getString(6));
                 emp.setPassword(rs.getString(7));
             }
-        } catch(Exception e){
+        } catch(SQLException e){
             System.out.println("Error ListarIdEmp: "+ e.getMessage());
         }
         return emp;
@@ -144,7 +145,7 @@ public class EmpleadoDAO {
             ps.setString(6, em.getPassword());
             ps.setInt(7, em.getId());
             ps.executeUpdate();
-        } catch (Exception e) {
+        } catch (SQLException e) {
             System.out.println("Error ActualizarEmp: "+ e.getMessage());
         }
         return r;
@@ -156,7 +157,7 @@ public class EmpleadoDAO {
             con = cn.Conexion();
             ps = con.prepareStatement(sql);
             ps.executeUpdate();
-        } catch (Exception e) {
+        } catch (SQLException e) {
             System.out.println("Error DeleteEmp: " +  e.getMessage());
         }
     }

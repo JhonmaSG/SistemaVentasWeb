@@ -20,7 +20,7 @@
     </head>
     <body>
 
-        <form class="needs-validation mx-auto text-center" onsubmit="mostrarAlerta()" novalidate style="width:800px">
+        <form class="needs-validation mx-auto text-center" onsubmit="" novalidate style="width:800px">
 
             <div class="jumbotron jumbotron-fluid mx-auto">
                 <div class="container">
@@ -112,11 +112,17 @@
                             if (form.checkValidity() === false) {
                                 event.preventDefault();
                                 event.stopPropagation();
+                                
+                            }else{
+                                mostrarAlerta();
                             }
                             form.classList.add('was-validated');
+                            
                         }, false);
+                        
                     });
                 }, false);
+                
             })();
         </script>
 

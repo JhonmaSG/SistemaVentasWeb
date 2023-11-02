@@ -8,6 +8,7 @@ import config.conexion;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 /**
  *
@@ -31,7 +32,7 @@ public class VentaDAO {
             while( rs.next() ){
                 numeroSerie = rs.getString(1);    
             }
-        } catch (Exception e){
+        } catch (SQLException e){
             System.out.println("Error GenerarSerie: " + e.getMessage());
         }
         return numeroSerie;
@@ -47,7 +48,7 @@ public class VentaDAO {
             while( rs.next() ){
                 idVentas = rs.getString(1);    
             }
-        } catch (Exception e){
+        } catch (SQLException e){
             System.out.println("Error IdVentas: " + e.getMessage());
         }
         return idVentas;
@@ -65,7 +66,7 @@ public class VentaDAO {
             ps.setDouble(5,ve.getPrecio());
             ps.setString(6,ve.getEstado());
             ps.executeUpdate();
-        } catch (Exception e){
+        } catch (SQLException e){
             System.out.println("Error GuardarVenta: " + e.getMessage());
         }
         return r;
@@ -81,7 +82,7 @@ public class VentaDAO {
             ps.setInt(3,venta.getCantidad());
             ps.setDouble(4,venta.getPrecio());
             ps.executeUpdate();
-        } catch (Exception e){
+        } catch (SQLException e){
             System.out.println("Error GuardarDetalleVentas: " + e.getMessage());
         }
         return r;

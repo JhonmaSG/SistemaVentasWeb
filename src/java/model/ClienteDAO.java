@@ -8,6 +8,7 @@ import config.conexion;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,7 +39,7 @@ public class ClienteDAO {
                 c.setDir(rs.getString(4));
                 c.setEs(rs.getString(5));
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
             System.out.println("Error BuscarCl: "+ e.getMessage());
         } 
         return c;
@@ -62,7 +63,7 @@ public class ClienteDAO {
 
                 lista.add(cl);
             }
-        } catch ( Exception ex) {
+        } catch ( SQLException ex) {
             System.out.println("Fallo ListarCl: "+ ex.getMessage());
         }
         return lista;
@@ -78,7 +79,7 @@ public class ClienteDAO {
             ps.setString(3, cl.getDir());
             ps.setString(4, cl.getEs());
             ps.executeUpdate();
-        } catch (Exception e) {
+        } catch (SQLException e) {
             System.out.println("Error AgregarCl: "+ e.getMessage());
         }
         return r;
@@ -97,7 +98,7 @@ public class ClienteDAO {
                 cli.setDir(rs.getString(4));
                 cli.setEs(rs.getString(5));
             }
-        } catch(Exception e){
+        } catch(SQLException e){
             System.out.println("Error ListarIdCl: "+ e.getMessage());
         }
         return cli;
@@ -114,7 +115,7 @@ public class ClienteDAO {
             ps.setString(4, cl.getEs());
             ps.setInt(5, cl.getId());
             ps.executeUpdate();
-        } catch (Exception e) {
+        } catch (SQLException e) {
             System.out.println("Error ActualizarCl: "+ e.getMessage());
         }
         return r;
@@ -126,7 +127,7 @@ public class ClienteDAO {
             con = cn.Conexion();
             ps = con.prepareStatement(sql);
             ps.executeUpdate();
-        } catch (Exception e) {
+        } catch (SQLException e) {
             System.out.println("Error DeleteCl: " + e.getMessage());
         }
     }

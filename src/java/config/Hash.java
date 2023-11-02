@@ -17,14 +17,16 @@ import javax.crypto.spec.SecretKeySpec;
 public class Hash {
     
     public static String encriptar(String clave){
-        String clave1 = sha256(clave);
-        String clave2 = AES(clave1);
+        String clave1 = sha256(clave);//Genera un valor hash de 256 bits
+        String clave2 = AES(clave1);// Encriptar en un algoritmo de cifrado simétrico
         return clave2;
     }
-    
-    public static String sha256(final String base) {
+    //Genera un valor hash de 256 bits
+    private static String sha256(final String base) {
     try{
+        //Proporciona funcionalidades para calcular resúmenes criptográficos
         final MessageDigest digest = MessageDigest.getInstance("SHA-256");
+        //Digest: Devuelve un arreglo de bytes
         final byte[] hash = digest.digest(base.getBytes("UTF-8"));
         final StringBuilder hexString = new StringBuilder();
         
@@ -55,8 +57,8 @@ public class Hash {
 
     }
 
-    // Encriptar
-    public static String AES(String encriptar) {
+    // Encriptar en un algoritmo de cifrado simétrico
+    private static String AES(String encriptar) {
         String llave = "MyPrimeraChamba";
         try {
             SecretKeySpec secretKeySpec = CrearClave(llave);

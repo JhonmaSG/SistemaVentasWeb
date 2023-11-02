@@ -8,6 +8,7 @@ import config.conexion;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,7 +42,7 @@ public class ProductoDAO {
                 p.setStock(rs.getInt(4));
                 p.setEstado(rs.getString(5));
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
             System.out.println("Error BuscarPr: " + e.getMessage());
         }
         return p;
@@ -57,7 +58,7 @@ public class ProductoDAO {
             ps.setInt(2, id);
             
             ps.executeUpdate();
-        } catch(Exception e){
+        } catch(SQLException e){
             System.out.println("Error ActualizarStockPr: " + e.getMessage());
         }
         return r;
@@ -78,7 +79,7 @@ public class ProductoDAO {
                 pr.setStock(rs.getInt(4));
                 pr.setEstado(rs.getString(5));
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
             System.out.println("Error BuscarPr: " + e.getMessage());
         }
         return pr;
@@ -102,7 +103,7 @@ public class ProductoDAO {
 
                 lista.add(pr);
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
             System.out.println("Error ListarPr: " + e.getMessage());
         }
         return lista;
@@ -118,7 +119,7 @@ public class ProductoDAO {
             ps.setInt(3, p.getStock());
             ps.setString(4, p.getEstado());
             ps.executeUpdate();
-        } catch (Exception e) {
+        } catch (SQLException e) {
             System.out.println("Error AgregarPr: " + e.getMessage());
         }
         return r;
@@ -138,7 +139,7 @@ public class ProductoDAO {
                 pr.setStock(rs.getInt(4));
                 pr.setEstado(rs.getString(5));
             }
-        } catch(Exception e){
+        } catch(SQLException e){
             System.out.println("Error ListarIdPr: " + e.getMessage());
         }
         return pr;
@@ -155,7 +156,7 @@ public class ProductoDAO {
             ps.setString(4, pr.getEstado());
             ps.setInt(5, pr.getId());
             ps.executeUpdate();
-        } catch (Exception e) {
+        } catch (SQLException e) {
             System.out.println("Error ActualizarPr: " + e.getMessage());
         }
         return r;
@@ -167,7 +168,7 @@ public class ProductoDAO {
             con = cn.Conexion();
             ps = con.prepareStatement(sql);
             ps.executeUpdate();
-        } catch (Exception e) {
+        } catch (SQLException e) {
             System.out.println("Error DeletePr: " + e.getMessage());
         }
     }
