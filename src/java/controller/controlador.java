@@ -93,7 +93,7 @@ public class controlador extends HttpServlet {
                     String password = request.getParameter("txtPassword");
                     
                     String passEncriptada = encriptar(password);
-                    System.out.println("contra encriptada Controlador: " + passEncriptada);
+                    //System.out.println("contra encriptada Controlador: " + passEncriptada);
                     
                     em.setDni(dni);
                     em.setNom(nom);
@@ -346,6 +346,11 @@ public class controlador extends HttpServlet {
         if (menu.equals("Ayuda")) {
             request.setAttribute("usuario", usuario);
             request.getRequestDispatcher("Ayuda.jsp").forward(request, response);
+        }
+        
+        if( menu == null ){
+            request.setAttribute("usuario", usuario);
+            request.getRequestDispatcher("Home.jsp").forward(request, response);
         }
     }
 

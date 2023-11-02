@@ -38,7 +38,7 @@ public class validar extends HttpServlet {
             String pass = request.getParameter("txtpass");
 
             String passEncriptada = encriptar(pass);
-            System.out.println("contra encriptada Validar: " + passEncriptada);
+            //System.out.println("contra encriptada Validar: " + passEncriptada);
             //System.out.println("tamaño String: " + passEncriptada.length());
 
             em = edao.validar(user, passEncriptada);

@@ -6,6 +6,11 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="model.Empleado" %>
+<% HttpSession sesion = request.getSession();
+ Empleado emp = (Empleado) sesion.getAttribute("usuario"); 
+   if( emp != null ){
+%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -135,3 +140,8 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js" integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+" crossorigin="anonymous"></script>
     </body>
 </html>
+
+<% } else{
+    request.getRequestDispatcher("index.jsp").forward(request,response);
+}
+%>
