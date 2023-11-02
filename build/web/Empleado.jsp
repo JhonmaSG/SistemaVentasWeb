@@ -15,6 +15,9 @@
         <title>EMPLEADOS</title>
     </head>
     <body>
+        
+        <h1 class="display-4">Empleado</h1>
+        
         <div class="d-flex">
             <div class="card">
                 <div class="card-body">
@@ -38,6 +41,10 @@
                         <div class="form-group">
                             <label>Usuario</label>
                             <input type="text" value="${empleado.getUser()}" name="txtUser" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label>Contraseña</label>
+                            <input type="text" value="" name="txtPassword" class="form-control">
                         </div>
 
                         <input type="submit" name="accion" value="Agregar" class="btn btn-info">

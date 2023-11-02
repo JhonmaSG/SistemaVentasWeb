@@ -32,18 +32,14 @@ public class EmpleadoDAO {
 
             ps.setString(1, user);
             ps.setString(2, clave);
-            System.out.println("Userrrr: "+user);
-            System.out.println("Claveeee: "+clave);
+            //System.out.println("Userrrr: "+user);
+            //System.out.println("Claveeee: "+clave);
             rs = ps.executeQuery();
             while (rs.next()) {
                 em.setId(rs.getInt("IdEmpleado"));
-                //System.out.println("Id BD:"+em.getId());
                 em.setUser(rs.getString("User"));
-                //System.out.println("User BD:"+em.getUser());
                 em.setDni(rs.getString("Dni"));
-                //System.out.println("DNI BD:"+em.getDni());
                 em.setNom(rs.getString("Nombres"));
-                //System.out.println("NOM BD:"+em.getNom());
             }
         } catch (Exception e) {
             System.out.println("Error ValidarEmp: "+ e.getMessage());

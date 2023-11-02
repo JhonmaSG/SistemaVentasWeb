@@ -38,18 +38,15 @@ public class validar extends HttpServlet {
             String pass = request.getParameter("txtpass");
 
             String passEncriptada = encriptar(pass);
-            System.out.println("contra encriptada: " + passEncriptada);
-            System.out.println("tamaño String: " + passEncriptada.length());
+            System.out.println("contra encriptada Validar: " + passEncriptada);
+            //System.out.println("tamaño String: " + passEncriptada.length());
 
             em = edao.validar(user, passEncriptada);
 
             if (em.getUser() != null) {//Si trajo algo de la base de datos
                 System.out.println("Ingreso Sesion OK");
                 HttpSession sesion = request.getSession();
-                //System.out.println("User: "+em.getUser());
-
-                //System.out.println("Id original: "+em.getId());
-                //System.out.println("Sesion numero1: " + sesion.getId());
+                
                 sesion.setAttribute("usuario", em);//clase: "usuario"
                 request.getRequestDispatcher("controlador?menu=Principal")
                         .forward(request, response);

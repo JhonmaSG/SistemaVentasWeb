@@ -5,6 +5,7 @@
 package controller;
 
 import config.GenerarSerie;
+import static config.Hash.encriptar;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
@@ -65,12 +66,12 @@ public class controlador extends HttpServlet {
         String accion = request.getParameter("accion");//Accion recibe la accion del user
 
         //Principal
-        if (menu.equalsIgnoreCase("Principal")) {
+        if (menu.equals("Principal")) {
             HttpSession sesion = request.getSession();
             usuario = (Empleado) sesion.getAttribute("usuario");
             request.getRequestDispatcher("Principal.jsp").forward(request, response);
         }
-        if (menu.equalsIgnoreCase("Home")) {
+        if (menu.equals("Home")) {
             request.setAttribute("usuario", usuario);
             request.getRequestDispatcher("Home.jsp").forward(request, response);
         }
@@ -89,13 +90,17 @@ public class controlador extends HttpServlet {
                     String tel = request.getParameter("txtTel");
                     String estado = request.getParameter("txtEstado");
                     String user = request.getParameter("txtUser");
-                    String password = asegurarClave(request.getParameter("clave"));
+                    String password = request.getParameter("txtPassword");
+                    
+                    String passEncriptada = encriptar(password);
+                    System.out.println("contra encriptada Controlador: " + passEncriptada);
+                    
                     em.setDni(dni);
                     em.setNom(nom);
                     em.setTel(tel);
                     em.setEstado(estado);
                     em.setUser(user);
-                    em.setPassword(password);
+                    em.setPassword(passEncriptada);
                     
                     edao.agregar(em);
                     request.getRequestDispatcher("controlador?menu=Empleado&accion=Listar").forward(request, response);
@@ -336,6 +341,11 @@ public class controlador extends HttpServlet {
                     request.getRequestDispatcher("RegistrarVenta.jsp").forward(request, response);
             }
             request.getRequestDispatcher("RegistrarVenta.jsp").forward(request, response);
+        }
+        
+        if (menu.equals("Ayuda")) {
+            request.setAttribute("usuario", usuario);
+            request.getRequestDispatcher("Ayuda.jsp").forward(request, response);
         }
     }
 

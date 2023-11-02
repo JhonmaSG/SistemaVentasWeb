@@ -45,6 +45,10 @@
                         <a style="margin-left: 10px; border: none" class="btn btn-outline-light" 
                            href="controlador?menu=NuevaVenta&accion=default" target="myFrame">Nueva Venta</a>
                     </li>
+                    <li class="nav-item">
+                        <a style="margin-left: 10px; border: none" class="btn btn-outline-light" 
+                           href="controlador?menu=Ayuda" target="myFrame">Ayuda</a>
+                    </li>
                 </ul>
             </div>
             
@@ -58,7 +62,8 @@
                             <img src="img/user.png" alt="60" width="60"/>
                         </a>
                         <a class="dropdown-item" href="#">${usuario.getUser()}</a>
-                        <a class="dropdown-item" href="#">Usuario@gmail.com</a>
+                        <a class="dropdown-item" href="#">${usuario.getUser()}@gmail.com</a>
+                        <a class="dropdown-item" href="#">Ajustes</a>
                         <div class="dropdown-divider"></div>
 
                         <form action="validar" method="POST">

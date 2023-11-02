@@ -15,7 +15,7 @@ public class Empleado {
     String tel;
     String estado;
     String user;
-    String password = "111";
+    String password;
 
     public Empleado() {
     }

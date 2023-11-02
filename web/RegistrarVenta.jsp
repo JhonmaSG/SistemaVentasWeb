@@ -22,6 +22,8 @@
         </style>
     </head>
     <body>
+        
+        <h1 class="display-4">Nueva Venta</h1>
 
         <div class="d-flex">
             <div class="col-sm-5 parte01">
