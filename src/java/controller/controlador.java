@@ -228,7 +228,7 @@ public class controlador extends HttpServlet {
                     System.out.println("id before: " + idp);
                     //idp = Integer.parseInt(request.getParameter("id"));
                     String nom1 = request.getParameter("txtNom");
-                    Double pre1 = Double.parseDouble(request.getParameter("txtPre"));
+                    Double pre1 = Double.valueOf(request.getParameter("txtPre"));
                     int st1 = Integer.parseInt(request.getParameter("txtStock"));
                     String estado1 = request.getParameter("txtEstado");
                     pr.setId(idp);

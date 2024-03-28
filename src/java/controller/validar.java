@@ -11,8 +11,6 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import java.security.MessageDigest;
-import java.util.Base64;
 import model.Empleado;
 import model.EmpleadoDAO;
 
@@ -61,22 +59,6 @@ public class validar extends HttpServlet {
             request.getRequestDispatcher("index.jsp")
                     .forward(request, response);
         }
-    }
-
-    
-    private String asegurarClave(String clave) {
-        String claveSHA = null;
-
-        try {
-            //Instanciamos el tipo de Hash
-            MessageDigest sha256 = MessageDigest.getInstance("SHA-256");
-            //Pasa: clave a bytes
-            sha256.update(clave.getBytes());
-            claveSHA = Base64.getEncoder().encodeToString(sha256.digest());
-        } catch (Exception ex) {
-            System.out.println("ERROR to SHA256\n" + ex);
-        }
-        return claveSHA;
     }
 
     @Override
