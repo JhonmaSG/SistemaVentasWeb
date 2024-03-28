@@ -74,11 +74,11 @@
             </div>
         </nav>
 
-        <div class="m-4" style="height: 530px; margin-bottom: 0px;">
-            <iframe name="myFrame" style="height: 100%; width: 100%; border: none;"></iframe>
+        <div class="m-4" style="height: 759px; margin-bottom: 0px;">
+            <iframe name="myFrame" style="height: 100%; width: 100%; max-height: 1080px; border: none;"></iframe>
         </div>
 
-        <blockquote class="blockquote text-center mx-auto" style="background: #333333;">
+        <blockquote class="blockquote text-center mx-auto" style="background: #333333; margin-bottom: 0px;">
             <p class="mb-0" style="color: white;">© Todos los Derechos Reservados 2023 </p>
             <footer class="blockquote-footer" style="color: gray;">Pamazon S.A International</footer>
         </blockquote>
